@@ -46,6 +46,21 @@ export class AuthService {
 		}
 	}
 
+	async getNewTokens(refreshToken: string) {
+		const result = await this.jwt.verifyAsync(refreshToken)
+		if (!result) throw new UnauthorizedException('Invalid refresh token!')
+
+		// eslint-disable-next-line @typescript-eslint/no-unused-vars
+		const { password, ...user } = await this.userService.getById(result.id)
+
+		const tokens = this.issueToken(user.id)
+
+		return {
+			user,
+			...tokens
+		}
+	}
+
 	private issueToken(userId: string) {
 		const data = { id: userId }
 
@@ -86,7 +101,7 @@ export class AuthService {
 		})
 	}
 
-	removeRefreshTokenToResponse(res: Response) {
+	removeRefreshTokenFromResponse(res: Response) {
 		res.cookie(this.REFRESH_TOKEN_NAME, '', {
 			httpOnly: true,
 			domain: 'localhost',
