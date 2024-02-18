@@ -1,4 +1,5 @@
 import {
+	IsEmail,
 	IsNumber,
 	IsOptional,
 	IsString,
@@ -41,7 +42,4 @@ export class UserDto extends PomodoroSettingsDto {
 	@IsString()
 	@IsOptional()
 	password?: string
-}
-function IsEmail(): (target: UserDto, propertyKey: 'email') => void {
-	throw new Error('Function not implemented.')
 }
