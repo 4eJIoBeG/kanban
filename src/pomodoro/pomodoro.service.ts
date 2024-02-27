@@ -46,7 +46,7 @@ export class PomodoroService {
 			data: {
 				rounds: {
 					createMany: {
-						data: Array.from({ length: 7 }, () => ({
+						data: Array.from({ length: user.intervalsCount }, () => ({
 							totalSeconds: 0
 						}))
 					}
